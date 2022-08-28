@@ -538,6 +538,7 @@ img {
         <link href='https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css' rel='stylesheet'>
 
         <title>Portfolio website complete</title>
+        
     </head>
     <body>
       
@@ -710,13 +711,13 @@ img {
                 <h2 class="section-title">Contact</h2>
 
                 <div class="contact__container bd-grid">
-                    <form action="" class="contact__form">
-                        <input type="text" placeholder="Name" id="NAME" class="contact__input">
-                        <input type="mail" placeholder="Email" id="EMAIL"  class="contact__input">
-                        <input type="mail" placeholder="Phone" id="PHONE"  class="contact__input">
-                        <textarea name="" cols="0" rows="10" id="TEXT" class="contact__input"></textarea>
-                        
-                        <button onclick="fn1()" id="SUBMIT" class="contact__button button">Submit</button></form>
+                  <form action="" class="contact__form">
+                    <input type="text" placeholder="Name" id="NAME" class="contact__input">
+                    <input type="mail" placeholder="Email" id="EMAIL"  class="contact__input">
+                   
+                    <textarea placeholder="Any Message"  id="TEXT" class="contact__input"></textarea>
+                    
+                    <button onclick="fn1()" id="SUBMIT" class="contact__button button">Submit</button></form>
                 </div>
             </section>
         </main>
@@ -744,18 +745,18 @@ img {
             function fn1()
 {
     var a=document.getElementById("NAME").value;
-    var b=document.getElementById("PHONE").value;
+   // var b=document.getElementById("PHONE").value;
     var c=document.getElementById("TEXT").value;
     var d=document.getElementById("EMAIL").value;
     var emailpattern=/^[^]*@[^]*\.[a-z]{2,3}$/;
     if(!(a)){alert("Enter Name");}
-    if(!(isNaN(b))&&!(b.length==10)){alert("Enter valid phone number");}
+    //if(!(isNaN(b))&&!(b.length==10)){alert("Enter valid phone number");}
 
     if(!(d.match(emailpattern))){alert("Enter valid email id");}
-    else if(a&&b&&d){
+    else if(a&&d){
     let e=confirm("Are you sure you want to submit?");
     if(e){
-    alert("Your Response has been submitted.Thank you.");}
+    SendMail();}
     else{
     alert("Oops Your Response has not submitted.Fill it Again");}}
 }
@@ -816,5 +817,36 @@ sr.reveal('.home__img, .about__subtitle, .about__text, .skills__img',{delay: 400
 sr.reveal('.home__social-icon',{ interval: 200}); 
 sr.reveal('.skills__data, .work__img, .contact__input',{interval: 200}); 
         </script>
+        <script>
+          function SendMail(){
+              var params={
+                  from_name:document.getElementById("NAME").value,
+                  email_id:document.getElementById("EMAIL").value,
+                  //phone:document.getElementById("PHONE").value,
+                  message:document.getElementById("TEXT").value
+              }
+              alert("Your Response has been submitted.");
+              emailjs.send("service_ylrdc77","template_oi4w6sk",params);
+              alert("I will contact you soon.");
+                 
+          }
+      </script>
+    
+      
+    <script>
+      (function() {
+          // https://dashboard.emailjs.com/admin/account
+          
+          emailjs.init('bD8UPO6Uh14JHRAwM');
+      })();
+  </script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+  <script type="text/javascript">
+      (function() {
+          // https://dashboard.emailjs.com/admin/account
+          
+          emailjs.init('bD8UPO6Uh14JHRAwM');
+      })();
+  </script>
     </body>
 </html>
