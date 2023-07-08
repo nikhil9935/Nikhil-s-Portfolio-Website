@@ -553,7 +553,7 @@ img {
                         <li class="nav__item"><a href="#home" class="nav__link active">Home</a></li>
                         <li class="nav__item"><a href="#about" class="nav__link">About</a></li>
                         <li class="nav__item"><a href="#skills" class="nav__link">Skills</a></li>
-                        <li class="nav__item"><a href="#work" class="nav__link">Projets</a></li>
+                        <li class="nav__item"><a href="#work" class="nav__link">Projects</a></li>
                         <li class="nav__item"><a href="#certificate" class="nav__link">Certificates</a></li>
                         <li class="nav__item"><a href="#contact" class="nav__link">Contact</a></li>
                     </ul>
@@ -707,17 +707,17 @@ img {
               </div>
           </section>
          
-            <section class="contact section" id="contact">
+          <section class="contact section" id="contact">
                 <h2 class="section-title">Contact</h2>
 
                 <div class="contact__container bd-grid">
-                  <form action="" class="contact__form">
+                  <form action="" class="contact__form" id="contactForm">
                     <input type="text" placeholder="Name" id="NAME" class="contact__input">
                     <input type="mail" placeholder="Email" id="EMAIL"  class="contact__input">
                    
                     <textarea placeholder="Any Message"  id="TEXT" class="contact__input"></textarea>
                     
-                    <button onclick="fn1()" id="SUBMIT" class="contact__button button">Submit</button></form>
+                    <button type="submit">Submit</button></form>
                 </div>
             </section>
         </main>
@@ -730,36 +730,85 @@ img {
                 <a href="https://www.linkedin.com/in/nikhil-maurya-7890091b9/" class="footer__icon"><i class='bx bxl-linkedin'></i>
                
                   <script src="https://code.iconify.design/iconify-icon/1.0.0-beta.3/iconify-icon.min.js"></script>
-                <a href="https://twitter.com/NikhilM83542223" class="footer__icon"><i class='bx bxl-twitter' ></i></a>
+               
             </div>
             <p class="footer__copy">&#169;All rigths reserved</p>
         </footer>
 
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/7.14.1-0/firebase.js"></script>
+        <script>
+          const firebaseConfig = {
+  apiKey: "AIzaSyCLtS0NF-NI7D4ChxbUvifrjEWHZQEZhmI",
+  authDomain: "contactform-1b4ba.firebaseapp.com",
+  databaseURL: "https://contactform-1b4ba-default-rtdb.firebaseio.com",
+  projectId: "contactform-1b4ba",
+  storageBucket: "contactform-1b4ba.appspot.com",
+  messagingSenderId: "323480949466",
+  appId: "1:323480949466:web:08f56047603c9cb8640be3"
+};
 
-        
+
+// initialize firebase
+firebase.initializeApp(firebaseConfig);
+
+// reference your database
+var contactFormDB = firebase.database().ref("contactForm");
+
+document.getElementById("contactForm").addEventListener("submit", submitForm);
+
+function submitForm(e) {
+  e.preventDefault();
+
+  var name = getElementVal("NAME");
+  var emailid = getElementVal("EMAIL");
+  var msgContent = getElementVal("TEXT");
+  if ((/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(emailid)) && (name!="") && (msgContent!="")){
+    alert("Your Response has been submitted. I will contact you soon.....")
+    location.reload();
+  }
+  else{
+    alert("Please enter all fields correctly")
+  }
+  
+  saveMessages(name, emailid, msgContent);
+
+  //   enable alert
+  document.querySelector(".alert").style.display = "block";
+
+  //   remove the alert
+  setTimeout(() => {
+    document.querySelector(".alert").style.display = "none";
+  }, 3000);
+
+  //   reset the form
+  document.getElementById("contactForm").reset();
+}
+
+const saveMessages = (name, emailid, msgContent) => {
+  var newContactForm = contactFormDB.push();
+
+  newContactForm.set({
+    name: name,
+    emailid: emailid,
+    msgContent: msgContent,
+  });
+};
+const getElementVal = (id) => {
+  
+  
+  return document.getElementById(id).value;
+};
+
+
+
+
+        </script>
         <script src="https://unpkg.com/scrollreveal"></script>
 
        
         <script>
            
-            function fn1()
-{
-    var a=document.getElementById("NAME").value;
-   // var b=document.getElementById("PHONE").value;
-    var c=document.getElementById("TEXT").value;
-    var d=document.getElementById("EMAIL").value;
-    var emailpattern=/^[^]*@[^]*\.[a-z]{2,3}$/;
-    if(!(a)){alert("Enter Name");}
-    //if(!(isNaN(b))&&!(b.length==10)){alert("Enter valid phone number");}
-
-    if(!(d.match(emailpattern))){alert("Enter valid email id");}
-    else if(a&&d){
-    let e=confirm("Are you sure you want to submit?");
-    if(e){
-    SendMail();}
-    else{
-    alert("Oops Your Response has not submitted.Fill it Again");}}
-}
+   
             
 const showMenu = (toggleId, navId) =>{
     const toggle = document.getElementById(toggleId),
@@ -817,36 +866,6 @@ sr.reveal('.home__img, .about__subtitle, .about__text, .skills__img',{delay: 400
 sr.reveal('.home__social-icon',{ interval: 200}); 
 sr.reveal('.skills__data, .work__img, .contact__input',{interval: 200}); 
         </script>
-        <script>
-          function SendMail(){
-              var params={
-                  from_name:document.getElementById("NAME").value,
-                  email_id:document.getElementById("EMAIL").value,
-                  //phone:document.getElementById("PHONE").value,
-                  message:document.getElementById("TEXT").value
-              }
-              alert("Your Response has been submitted.");
-              emailjs.send("service_ylrdc77","template_oi4w6sk",params);
-              alert("I will contact you soon.");
-                 
-          }
-      </script>
-    
-      
-    <script>
-      (function() {
-          // https://dashboard.emailjs.com/admin/account
-          
-          emailjs.init('bD8UPO6Uh14JHRAwM');
-      })();
-  </script>
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
-  <script type="text/javascript">
-      (function() {
-          // https://dashboard.emailjs.com/admin/account
-          
-          emailjs.init('bD8UPO6Uh14JHRAwM');
-      })();
-  </script>
+     
     </body>
 </html>
